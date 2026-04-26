@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════
+   FRESHMART — TAB PANEL & TOAST STYLES
+   Append to style.css (or typewriter.css)
+═══════════════════════════════════════════════════════════ */
+
+/* ─── TAB PANEL WRAPPER ──────────────────────────────────── */
+.tab-panel {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Animate in */
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1),
+              transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.tab-panel--in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ─── TAB PANEL HEADER ───────────────────────────────────── */
+.tp-header {
+  padding: 22px 26px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  flex-shrink: 0;
+  position: relative;
+}
+.tp-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--em), transparent);
+  opacity: 0.35;
+}
+.tab-back-btn {
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  padding: 6px 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.tab-back-btn:hover {
+  background: var(--emdim);
+  border-color: var(--embrd);
+  color: var(--em);
+  transform: translateX(-3px);
+}
+.tp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text1);
+  margin-bottom: 4px;
+}
+.tp-sub {
+  font-size: 12px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+/* ─── TAB PANEL BODY ─────────────────────────────────────── */
+.tp-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 26px;
+}
+.tp-body::-webkit-scrollbar { width: 3px; }
+.tp-body::-webkit-scrollbar-thumb { background: var(--embrd); border-radius: 3px; }
+
+/* ─── EMPTY STATE ────────────────────────────────────────── */
+.tp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 10px;
+  animation: fadeUp 0.4s ease both;
+}
+.tp-empty-ico { font-size: 52px; opacity: 0.6; }
+.tp-empty-title { font-size: 18px; font-weight: 700; color: var(--text1); }
+.tp-empty-sub { font-size: 13px; color: var(--text3); }
+
+/* ─── ORDERS PANEL ───────────────────────────────────────── */
+.tp-order-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  animation: fadeUp 0.3s ease both;
+  transition: all 0.2s;
+}
+.tp-order-row:hover {
+  border-color: var(--embrd);
+  background: var(--emdim);
+  transform: translateX(4px);
+}
+.tp-order-ico { font-size: 26px; }
+.tp-order-info { flex: 1; }
+.tp-order-name { font-size: 14px; font-weight: 700; }
+.tp-order-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.tp-order-price { font-size: 15px; font-weight: 800; color: var(--em); font-family: 'Cormorant Garamond', serif; }
+.tp-status {
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 4px 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.tp-status--active {
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--em);
+}
+
+/* ─── DEALS PANEL ────────────────────────────────────────── */
+.tp-deal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.tp-deal-card {
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 18px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  animation: fadeUp 0.35s ease both;
+}
+.tp-deal-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: var(--embrd);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.4);
+}
+.tp-deal-tag {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 3px 7px;
+  text-transform: uppercase;
+}
+.tp-deal-ico { font-size: 36px; line-height: 1; }
+.tp-deal-name { font-size: 13px; font-weight: 700; color: var(--text1); }
+.tp-deal-prices { display: flex; align-items: center; gap: 8px; }
+.tp-deal-was { font-size: 11px; color: var(--text3); text-decoration: line-through; }
+.tp-deal-now { font-size: 18px; font-weight: 800; font-family: 'Cormorant Garamond', serif; }
+
+/* ─── TRACK PANEL ────────────────────────────────────────── */
+.tp-track-eta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.06));
+  border: 1px solid rgba(16,185,129,0.25);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.3s ease both;
+}
+.tp-eta-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--em), #059669);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 28px rgba(16,185,129,0.4);
+  flex-shrink: 0;
+  animation: etaPulse 2s ease-in-out infinite;
+}
+@keyframes etaPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.35); }
+  50%       { box-shadow: 0 0 44px rgba(16,185,129,0.65), 0 0 80px rgba(16,185,129,0.2); }
+}
+.tp-eta-num  { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: #000; line-height: 1; }
+.tp-eta-unit { font-size: 11px; font-weight: 800; color: rgba(0,0,0,0.7); }
+.tp-eta-title { font-size: 16px; font-weight: 800; color: var(--text1); }
+.tp-eta-sub   { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+.tp-track-steps { display: flex; flex-direction: column; gap: 0; }
+.tp-track-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 28px;
+  animation: fadeUp 0.35s ease both;
+}
+.tp-track-step:last-child { padding-bottom: 0; }
+.tp-track-ico {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 2px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: all 0.3s;
+  z-index: 1;
+}
+.tp-track-step.done .tp-track-ico {
+  background: rgba(16,185,129,0.15);
+  border-color: var(--em);
+  box-shadow: 0 0 16px rgba(16,185,129,0.3);
+}
+.tp-track-step.active .tp-track-ico {
+  background: var(--em);
+  border-color: var(--em);
+  box-shadow: 0 0 24px rgba(16,185,129,0.6);
+  animation: activeStep 1.6s ease-in-out infinite;
+}
+@keyframes activeStep {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.1); }
+}
+.tp-track-line {
+  display: none;
+}
+.tp-track-step .tp-track-line.show {
+  display: block;
+  position: absolute;
+  left: 20px;
+  top: 42px;
+  width: 2px;
+  height: calc(100% - 42px);
+  background: var(--border2);
+}
+.tp-track-step.done .tp-track-line.show {
+  background: linear-gradient(180deg, var(--em), var(--border2));
+}
+.tp-track-info { flex: 1; padding-top: 8px; }
+.tp-track-label { font-size: 14px; font-weight: 700; color: var(--text1); }
+.tp-track-step.done .tp-track-label  { color: var(--em); }
+.tp-track-step.active .tp-track-label { color: var(--em); }
+.tp-track-sub { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+/* ─── FADE UP KEYFRAME (shared) ──────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── TOAST ──────────────────────────────────────────────── */
+.tab-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(8,20,40,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--toast-color, var(--em));
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text1);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6),
+              0 0 20px color-mix(in srgb, var(--toast-color, #10b981) 20%, transparent);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.tab-toast strong { color: var(--toast-color, var(--em)); }
+.tab-toast--in {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

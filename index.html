@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>FreshMart — AI Grocery Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="typewriter.css"/>
+  <link rel="stylesheet" href="tab-fix.css"/>
+</head>
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div> 
+  </div>
+  <div class="noise"></div>
+
+  <div class="app">
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <div class="logo-leaf">🌿</div>
+        </div>
+        <div class="brand-words">
+          <span class="bw-fresh">Fresh</span><span class="bw-mart">Mart</span>
+          
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <span class="nav-link active">🛒 Shop</span>
+        <span class="nav-link">📦 Orders</span>
+        <span class="nav-link">💚 Deals</span>
+        <span class="nav-link">📍 Track</span>
+      </div>
+
+      <div class="nav-actions">
+        <div class="nav-cart-chip" id="navCartChip" style="display:none">
+          <span>🛒</span>
+          <span id="navCartAmt">₹0</span>
+          <div class="cart-dot" id="cartDot">0</div>
+        </div>
+        <div class="nav-user">
+          <div class="user-ava" id="userAva">G</div>
+          <span id="userNameNav">Guest</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- LAYOUT -->
+    <div class="layout">
+
+      <!-- SIDEBAR LEFT -->
+      <aside class="sidebar">
+
+        <!-- Agent Card -->
+        <div class="agent-card">
+          <div class="ac-glow"></div>
+          <div class="ac-grid"></div>
+          <div class="ac-body">
+            <div class="ac-ava-wrap">
+              <div class="ac-ring r1"></div>
+              <div class="ac-ring r2"></div>
+              <div class="ac-ava">🤖</div>
+              <div class="ac-live"><span></span>LIVE</div>
+            </div>
+            <div class="ac-info">
+              <div class="ac-name">Freshy</div>
+              <div class="ac-role">AI Grocery Assistant</div>
+              <div class="ac-status" id="agentStatus">
+                <div class="ac-dot"></div>
+                <span>Online · Ready to help</span>
+              </div>
+            </div>
+          </div>
+          <div class="ac-metrics">
+            <div class="acm"><span class="acmv">4.9★</span><span class="acml">Rating</span></div>
+            <div class="acm-sep"></div>
+            <div class="acm"><span class="acmv">&lt;2m</span><span class="acml">Reply</span></div>
+            <div class="acm-sep"></div>
+            <div class="acm"><span class="acmv">98%</span><span class="acml">Happy</span></div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="sb-card">
+          <div class="sb-label">CATEGORIES</div>
+          <div class="cat-list" id="catList">
+            <div class="cat-row active" data-cat="Fruits">
+              <div class="cat-bar" style="background:linear-gradient(180deg,#fb923c,#ea580c)"></div>
+              <span class="cat-ico">🍎</span>
+              <div class="cat-meta"><div class="cat-nm">Fruits</div><div class="cat-ct">5 fresh items</div></div>
+              <span class="cat-idx">01</span>
+            </div>
+            <div class="cat-row" data-cat="Vegetables">
+              <div class="cat-bar" style="background:linear-gradient(180deg,#4ade80,#16a34a)"></div>
+              <span class="cat-ico">🥦</span>
+              <div class="cat-meta"><div class="cat-nm">Vegetables</div><div class="cat-ct">5 fresh items</div></div>
+              <span class="cat-idx">02</span>
+            </div>
+            <div class="cat-row" data-cat="Snacks">
+              <div class="cat-bar" style="background:linear-gradient(180deg,#fbbf24,#d97706)"></div>
+              <span class="cat-ico">🍫</span>
+              <div class="cat-meta"><div class="cat-nm">Snacks</div><div class="cat-ct">5 tasty items</div></div>
+              <span class="cat-idx">03</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="sb-card cart-card" id="cartCard" style="display:none">
+          <div class="sb-label">CART <span class="sb-badge" id="sbBadge">0</span></div>
+          <div class="cart-list" id="cartList"></div>
+          <div class="cart-total">
+            <span>Grand Total</span>
+            <span class="cart-total-val" id="cartTotalVal">₹0</span>
+          </div>
+        </div>
+
+        <!-- Promise -->
+        <div class="sb-promise">
+          <div class="sp"><span>🚀</span><span>30 Min</span></div>
+          <div class="sp-sep"></div>
+          <div class="sp"><span>🌿</span><span>Farm Fresh</span></div>
+          <div class="sp-sep"></div>
+          <div class="sp"><span>🔐</span><span>Secure</span></div>
+        </div>
+
+      </aside>
+
+      <!-- CHAT -->
+      <main class="chat">
+
+        <!-- Header -->
+        <div class="chat-hdr">
+          <div class="ch-l">
+            <div class="ch-ava-wrap">
+              <div class="ch-ava">🤖</div>
+              <div class="ch-online"></div>
+            </div>
+            <div>
+              <div class="ch-name">Freshy <span class="ch-ai-badge">✦ AI</span></div>
+              <div class="ch-status" id="chatStatus">
+                <div class="ch-pulse"></div>
+                <span id="chatStatusText">Online · Ready to help</span>
+              </div>
+            </div>
+          </div>
+          <div class="ch-r">
+            <div class="ch-cart-pill" id="chatCartPill" style="display:none">🛒 <span id="pillAmt">₹0</span></div>
+            <div class="ch-clock" id="clock"></div>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-body" id="chatBody">
+          <div class="date-chip"><span>Today</span></div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="qzone" id="qzone"></div>
+
+        <!-- Input -->
+        <div class="inp-row">
+          <div class="inp-box" id="inpBox">
+            <span class="inp-icon" id="inpIcon">💬</span>
+            <input type="text" id="inp" placeholder="Ask Freshy anything…" autocomplete="off" spellcheck="false"/>
+          </div>
+          <button class="send-btn" id="sendBtn" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div class="inp-hint" id="inpHint">Tell Freshy your name to get started 👋</div>
+
+      </main>
+
+      <!-- SIDEBAR RIGHT -->
+      <aside class="sidebar-right">
+
+        <!-- Today's Picks -->
+        <div class="sb-card">
+          <div class="sb-label">TODAY'S PICKS 🔥</div>
+          <div class="picks-list">
+            <div class="pick-item">
+              <span class="pick-ico">🥭</span>
+              <div class="pick-info"><div class="pick-name">Alphonso Mango</div><div class="pick-tag">Seasonal</div></div>
+              <div class="pick-price">₹80<small>/kg</small></div>
+            </div>
+            <div class="pick-item">
+              <span class="pick-ico">🫐</span>
+              <div class="pick-info"><div class="pick-name">Blueberries</div><div class="pick-tag">Imported</div></div>
+              <div class="pick-price">₹150<small>/box</small></div>
+            </div>
+            <div class="pick-item">
+              <span class="pick-ico">🥬</span>
+              <div class="pick-info"><div class="pick-name">Organic Spinach</div><div class="pick-tag">Farm Direct</div></div>
+              <div class="pick-price">₹25<small>/bunch</small></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Ask -->
+        <div class="sb-card">
+          <div class="sb-label">QUICK ASK ⚡</div>
+          <div class="quick-asks" id="quickAsks">
+            <div class="qa-chip" data-q="Show me fresh fruits">🍎 Fresh Fruits</div>
+            <div class="qa-chip" data-q="What vegetables do you have?">🥦 Vegetables</div>
+            <div class="qa-chip" data-q="Show me snacks and chips">🍿 Snacks</div>
+            <div class="qa-chip" data-q="What are today's best deals?">💚 Best Deals</div>
+            <div class="qa-chip" data-q="I am ready to checkout my order">🧾 Checkout</div>
+          </div>
+        </div>
+
+        <!-- Store Stats -->
+        <div class="sb-card">
+          <div class="sb-label">STORE STATS 📊</div>
+          <div class="stats-grid">
+            <div class="stat-box"><div class="stat-ico">📦</div><div class="stat-val">1,247</div><div class="stat-lbl">Orders Today</div></div>
+            <div class="stat-box"><div class="stat-ico">⭐</div><div class="stat-val">4.9</div><div class="stat-lbl">Avg Rating</div></div>
+            <div class="stat-box"><div class="stat-ico">🚴</div><div class="stat-val">24</div><div class="stat-lbl">Riders</div></div>
+            <div class="stat-box"><div class="stat-ico">🌿</div><div class="stat-val">100%</div><div class="stat-lbl">Fresh</div></div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+  <script src="tab-fix.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

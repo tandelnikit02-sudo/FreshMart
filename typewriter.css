@@ -1,0 +1,96 @@
+/* ═══════════════════════════════════════════════════════
+   TYPEWRITER ADDITIONS — append to style.css
+   Real character-by-character typing with blinking cursor
+═══════════════════════════════════════════════════════ */
+
+/* ── Blinking block cursor ───────────────────────────── */
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--em);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  border-radius: 1px;
+  animation: twBlink 0.55s step-end infinite;
+  box-shadow: 0 0 6px rgba(16,185,129,0.7);
+}
+
+@keyframes twBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Cursor fade-out when typing finishes */
+.tw-cursor-done {
+  animation: twFadeOut 0.35s ease forwards;
+}
+@keyframes twFadeOut {
+  from { opacity: 1; transform: scaleY(1); }
+  to   { opacity: 0; transform: scaleY(0.3); }
+}
+
+/* Active bubble: subtle left border glow while typing */
+.bubble.bot.tw-active {
+  border-left: 2px solid var(--em);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    -3px 0 16px rgba(16,185,129,0.15);
+  transition: border-left-color 0.4s, box-shadow 0.4s;
+}
+
+/* After typing done — fade the left border back to normal */
+.bubble.bot:not(.tw-active) {
+  border-left: 1px solid var(--border2);
+  transition: border 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* ── Thinking animation (pre-typewriter dots) ─────────── */
+.tw-thinking {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0;
+}
+
+.tw-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--em);
+  opacity: 0.4;
+  animation: twDotBounce 1.2s ease-in-out infinite;
+}
+.tw-dot:nth-child(2) { animation-delay: 0.16s; }
+.tw-dot:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes twDotBounce {
+  0%, 80%, 100% {
+    transform: translateY(0) scale(0.85);
+    opacity: 0.3;
+  }
+  40% {
+    transform: translateY(-8px) scale(1.15);
+    opacity: 1;
+  }
+}
+
+.tw-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 600;
+  margin-left: 4px;
+  letter-spacing: 0.3px;
+  animation: twLabelPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes twLabelPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* Timestamp fade-in after typing completes */
+.tw-timestamp {
+  opacity: 0;
+}
